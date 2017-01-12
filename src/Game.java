@@ -65,7 +65,7 @@ public class Game extends PApplet{
 			if(opengl) {
 				fullScreen(P2D);
 			} else {
-				fullScreen(P2D);
+				fullScreen();
 			}
 		} else {
 			if(opengl) {

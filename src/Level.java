@@ -205,7 +205,7 @@ public class Level {
 			applet.cursor();
 			applet.background(0);
 			drawUI("press_start");
-			Sound.controlMusic(Sound.music_main_menu, "play");
+			Sound.controlMusic(Sound.music[0], "play");
 			
 			if(skip()) { level = "main_menu"; }
 		}

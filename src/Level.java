@@ -442,8 +442,6 @@ public class Level {
 			BStage2.show();
 			BStage3.show();
 			
-			BFight.show();
-			
 			if(BStage1.clicked()) {
 				
 				healthbar1 = 1;

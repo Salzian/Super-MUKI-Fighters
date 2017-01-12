@@ -31,19 +31,6 @@ public class Sound {
 		minim.stop();
 	}
 	
-//	static void setMusic(String musicTrack) {
-//		if(music == null) {
-//			
-//			switch(musicTrack) {
-//			case "music.main_menu":
-//				music = music_main_menu; break;
-//			case "music.earrape-mode":
-//				music = music_earrape_mode; break;
-//			}
-//		}
-//		
-//	}
-	
 	static void controlMusic(AudioPlayer audioPlayer, String command) {
 		
 		switch(command) {

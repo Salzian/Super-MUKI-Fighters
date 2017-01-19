@@ -3,7 +3,7 @@ import processing.core.*;
 
 public class Level {
 	
-	static String level = "level_selection";
+	static String level = "startup";
 	
 	static Character player1;
 	static Character player2;
@@ -254,7 +254,6 @@ public class Level {
 				drawUI("UI.pre_fight");
 			} else {
 				controlCharacters();
-				vibrate();
 				player1.drawCharacter();
 				player2.drawCharacter();
 				drawUI("UI.fight");
@@ -329,16 +328,40 @@ public class Level {
 					applet.text("Super MUKI Fighters\n\nA beat 'em up game project made for university", 0, 0, applet.width, applet.height);
 				}
 				else if(creditsTimer < 6) {
-					applet.text("Programming\n\nFabian Fritzsche\nDustin Koschmann", 0, 0, applet.width, applet.height);
+					applet.text("Programming\n\nFabian Fritzsche\nDustin Koschmann\nEnrico Sansonetti", 0, 0, applet.width, applet.height);
 				}
 				else if(creditsTimer < 9) {
-					applet.text("Character Design\n\nEntoni [Nachname]", 0, 0, applet.width, applet.height);
+					applet.text("Character Design\n\nEntoni Carigla", 0, 0, applet.width, applet.height);
 				}
 				else if(creditsTimer < 12) {
 					applet.text("Level- & Logodesign\n\nSemi Kefeli", 0, 0, applet.width, applet.height);
 				}
 				else if(creditsTimer < 15) {
-					applet.text("Mac User\n\nPaolo Bonossi", 0, 0, applet.width, applet.height);
+					applet.text("Software used", 0, 0, applet.width, applet.height);
+				}
+				else if(creditsTimer < 18) {
+					applet.text("Programming:\n\nProcessing\nEclipse", 0, 0, applet.width, applet.height);
+				}
+				else if(creditsTimer < 21) {
+					applet.text("Graphics:\n\nAdobe Photoshop\nGIMP", 0, 0, applet.width, applet.height);
+				}
+				else if(creditsTimer < 24) {
+					applet.text("Sound:\n\nAbleton Live\nAudacity", 0, 0, applet.width, applet.height);
+				}
+				else if(creditsTimer < 27) {
+					applet.text("Libaries used", 0, 0, applet.width, applet.height);
+				}
+				else if(creditsTimer < 30) {
+					applet.text("Processing\n&\nProcessing OpenGL Support\nby\nThe Processing Foundation", 0, 0, applet.width, applet.height);
+				}
+				else if(creditsTimer < 33) {
+					applet.text("Swing\nby\nOracle Corporation", 0, 0, applet.width, applet.height);
+				}
+				else if(creditsTimer < 36) {
+					applet.text("XboxController\nby\nDr. phil. nat. Aegidius Pluess", 0, 0, applet.width, applet.height);
+				}
+				else if(creditsTimer < 39) {
+					applet.text("Minim\nby\nCompartmental", 0, 0, applet.width, applet.height);
 				}
 				else {
 					creditsTimer = -1;
@@ -615,12 +638,12 @@ public class Level {
 		if(Controls.W || Controls.c1A) {					player1.jump(); }
 		if(Controls.A || Controls.c1leftThumbLeft) { 		player1.moveLeft(); }
 		if(Controls.D || Controls.c1leftThumbRight) { 		player1.moveRight(); }
-		if(Controls.c1B) {									player1.punch(1); }
-		if(Controls.c1X) {									player1.kick(1); }
+		if(Controls.Alt || Controls.c1B) {					player1.punch(1); }
+		if(Controls.Space || Controls.c1X) {				player1.kick(1); }
 		
-		if(Controls.W || Controls.c2A) {					player2.jump(); }
-		if(Controls.A || Controls.c2leftThumbLeft) { 		player2.moveLeft(); }
-		if(Controls.D || Controls.c2leftThumbRight) { 		player2.moveRight(); }
+		if(Controls.Up || Controls.c2A) {					player2.jump(); }
+		if(Controls.Left || Controls.c2leftThumbLeft) { 	player2.moveLeft(); }
+		if(Controls.Right || Controls.c2leftThumbRight) { 	player2.moveRight(); }
 		if(Controls.c2B) {									player2.punch(2); }
 		if(Controls.c2X) {									player2.kick(2); }
 		
@@ -706,12 +729,10 @@ public class Level {
 				if(action == "punch") {
 					float damage = applet.random(2, 5);
 					player2.hit(damage);
-					setVibrate(Controls.gamepad2, damage);
 				}
 				if(action == "kick") {
 					float damage = applet.random(5, 10);
 					player2.hit(damage);
-					setVibrate(Controls.gamepad2, damage);
 				}
 				result = true;
 				break;
@@ -722,13 +743,11 @@ public class Level {
 					player1.hit(applet.random(2, 5));
 					float damage = applet.random(2, 5);
 					player1.hit(damage);
-					setVibrate(Controls.gamepad1, damage);
 				}
 				if(action == "kick") {
 					player1.hit(applet.random(5, 10));
 					float damage = applet.random(2, 5);
 					player1.hit(damage);
-					setVibrate(Controls.gamepad1, damage);
 				}
 				result = true;
 				break;
@@ -779,35 +798,6 @@ public class Level {
 			return false;
 			
 		} else { return false; }
-		
-	}
-	
-	
-	
-	static void vibrate() {
-
-		if (Clock.curTime - vibTime1 >= vibDuration1){
-			vibStrenght1 = 0;
-		}
-		
-		if (Clock.curTime - vibTime2 >= vibDuration2){
-			vibStrenght2 = 0;
-		}
-		
-	}
-	
-	static void setVibrate(XboxController controller, float damage) {
-		
-		if(controller == Controls.gamepad1) {
-			vibStrenght1 = (int) PApplet.map(damage, 0, 100, 0, 65535);
-			vibDuration1 = (int) PApplet.map(damage, 0, 100, 0, 2000);;
-			vibTime1 = Clock.curTime;
-		}
-		if(controller == Controls.gamepad2) {
-			vibStrenght2 = (int) PApplet.map(damage, 0, 100, 0, 65535);
-			vibDuration2 = (int) PApplet.map(damage, 0, 100, 0, 2000);;
-			vibTime2 = Clock.curTime;
-		}
 		
 	}
 	

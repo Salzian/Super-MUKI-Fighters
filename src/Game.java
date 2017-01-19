@@ -7,6 +7,12 @@ public class Game extends PApplet{
 	
 	public static void main(String[] args) {
 		Configurator.main(platformNames);
+//		try {
+//			startGame();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}	
 	
 	static boolean fullscreen = false;

@@ -12,6 +12,8 @@ public class Sound {
 		applet = p;
 		minim = new Minim(applet);
 		
+		loadSamples();
+		
 		for(int i = 0; i < music.length; i++) {
 			
 			music[i].setVolume((float) (Game.main_volume * Game.music_volume));
@@ -23,8 +25,6 @@ public class Sound {
 			sounds[i].setVolume((float) (Game.main_volume * Game.soundfx_volume));
 			
 		}
-		
-		loadSamples();
 	}
 	
 	static void stopSoundEngine() {

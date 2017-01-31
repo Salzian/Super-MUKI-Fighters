@@ -1,4 +1,3 @@
-import ch.aplu.xboxcontroller.XboxController;
 import processing.core.*;
 
 public class Level {
@@ -160,24 +159,24 @@ public class Level {
 				applet,
 				applet.width / 2 - applet.height / 4,
 				applet.height / 2,
-				Game.background[0].width / (applet.height / 200f),
-				Game.background[0].height / (applet.height / 200f),
+				Game.background[0].width / (applet.height / 100f),
+				Game.background[0].height / (applet.height / 100f),
 				1,
 				Game.background[0]);
 		BStage2 = new Button(
 				applet,
 				applet.width / 2 + applet.height / 4,
 				applet.height / 2,
-				Game.background[1].width / (applet.height / 200f),
-				Game.background[1].height / (applet.height / 200f),
+				Game.background[1].width / (applet.height / 100f),
+				Game.background[1].height / (applet.height / 100f),
 				2,
 				Game.background[1]);
 		BStage3 = new Button(
 				applet,
 				applet.width / 2,
 				applet.height / 4 * 3,
-				Game.background[2].width / (applet.height / 200f),
-				Game.background[2].height / (applet.height / 200f),
+				Game.background[2].width / (applet.height / 100f),
+				Game.background[2].height / (applet.height / 100f),
 				3,
 				Game.background[2]);
 		
@@ -219,13 +218,6 @@ public class Level {
 		if(level == "main_menu") {
 			applet.background(0);
 			drawUI("UI.main_menu");
-//			controlMenu(3);
-		}
-		
-		if(level == "character_selection") {
-			applet.background(0);
-			drawUI("UI.character_selection");
-//			controlMenu(6);
 		}
 		
 		if(level == "level_selection") {
@@ -657,51 +649,6 @@ public class Level {
 		}
 		
 	}
-	
-//	static void controlMenu(int max) {
-//		
-//		if(level != lastLevel) {
-//			
-//			menuPosition = 0;
-//			menuPositionMax = max;
-//			lastLevel = level;
-//			
-//		}
-//		
-//		if(!controlMenuImpulse) {
-//		
-//			if(Controls.Up || Controls.c1leftThumbUp || (Controls.c1DpadPressed && Controls.c1DpadDirection == 0)) {
-//				if(menuPosition > 0) { setMenuPos('-'); }
-//			}
-//			if(Controls.Down || Controls.c1leftThumbDown || (Controls.c1DpadPressed && Controls.c1DpadDirection == 4)) {
-//				if(menuPosition < menuPositionMax) { setMenuPos('+'); }
-//			}
-//			if(Controls.Left || Controls.c1leftThumbLeft || (Controls.c1DpadPressed && Controls.c1DpadDirection == 6)) {
-//				if(menuPosition > 0) { setMenuPos('-'); }
-//			}
-//			if(Controls.Right || Controls.c1leftThumbRight || (Controls.c1DpadPressed && Controls.c1DpadDirection == 2)) {
-//				if(menuPosition < menuPositionMax) { setMenuPos('+'); }
-//			}
-//			
-//			controlMenuImpulse = true;
-//			
-//		} else if(
-//				!Controls.Up &&
-//				!Controls.Down &&
-//				!Controls.Left &&
-//				!Controls.Right &&
-//				!Controls.c1leftThumbUp &&
-//				!Controls.c1leftThumbDown &&
-//				!Controls.c1leftThumbLeft &&
-//				!Controls.c1leftThumbRight &&
-//				!(Controls.c1DpadPressed && Controls.c1DpadDirection == 0) &&
-//				!(Controls.c1DpadPressed && Controls.c1DpadDirection == 4) &&
-//				!(Controls.c1DpadPressed && Controls.c1DpadDirection == 6) &&
-//				!(Controls.c1DpadPressed && Controls.c1DpadDirection == 2)) {
-//			controlMenuImpulse = false;
-//		}
-//		
-//	}
 	
 	static void setMenuPos(char dir) {
 		

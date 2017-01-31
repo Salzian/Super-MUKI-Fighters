@@ -153,9 +153,6 @@ public class Button {
 				applet.image(image, tempXpos, tempYpos, width, height);
 				applet.rect(tempXpos, tempYpos, width, height);
 			}
-//			else if(toggled) {
-//				applet.fill(0, 255, 0);
-//			}
 			
 			else {
 				applet.image(image, xpos, ypos, width, height);

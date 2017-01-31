@@ -95,47 +95,6 @@ public class Level {
 				0, 255, 255,
 				"Credits");
 
-		
-		BCharacter1 = new Button(
-				applet,
-				applet.width / 2 - applet.width / 8,
-				applet.height / 2 + applet.height / 16,
-				100, 100,
-				1,
-				255, 255, 255);
-
-		BCharacter2 = new Button(
-				applet,
-				applet.width / 2,
-				applet.height / 2 + applet.height / 16,
-				100, 100,
-				2,
-				0, 0, 0);
-
-		BCharacter3 = new Button(
-				applet,
-				applet.width / 2 + applet.width / 8,
-				applet.height / 2 + applet.height / 16,
-				100, 100,
-				3,
-				255, 255, 255);
-
-		BCharacter4 = new Button(
-				applet,
-				applet.width / 2 - applet.width / 16,
-				applet.height / 2 + applet.height / 4,
-				100, 100,
-				4,
-				0, 0, 0);
-
-		BCharacter5 = new Button(
-				applet,
-				applet.width / 2 + applet.width / 16,
-				applet.height / 2 + applet.height / 4,
-				100, 100,
-				5,
-				255, 255, 255);
-
 		BFight = new Button(
 				applet,
 				applet.width / 8 * 7,
@@ -159,25 +118,22 @@ public class Level {
 				applet,
 				applet.width / 2 - applet.height / 4,
 				applet.height / 2,
-				Game.background[0].width / (applet.height / 100f),
-				Game.background[0].height / (applet.height / 100f),
-				1,
+				applet.height / 2 + applet.height / 8,
+				applet.height / 3, applet.height / 10,
 				Game.background[0]);
 		BStage2 = new Button(
 				applet,
 				applet.width / 2 + applet.height / 4,
 				applet.height / 2,
-				Game.background[1].width / (applet.height / 100f),
-				Game.background[1].height / (applet.height / 100f),
-				2,
+				applet.height / 2 + applet.height / 8,
+				applet.height / 3, applet.height / 10,
 				Game.background[1]);
 		BStage3 = new Button(
 				applet,
 				applet.width / 2,
 				applet.height / 4 * 3,
-				Game.background[2].width / (applet.height / 100f),
-				Game.background[2].height / (applet.height / 100f),
-				3,
+				applet.height / 2 + applet.height / 8,
+				applet.height / 3, applet.height / 10,
 				Game.background[2]);
 		
 		tempXpos1 = - applet.width;
@@ -400,49 +356,6 @@ public class Level {
 			
 		}
 		
-		if(UIID == "UI.character_selection") {
-			applet.textSize(50);
-			applet.fill(0);
-			applet.textLeading(70);
-			applet.textAlign(PConstants.CENTER);
-			applet.text("Choose your\ncharacter", applet.width / 2, applet.height / 8);
-			
-			BCharacter1.show();
-			BCharacter2.show();
-			BCharacter3.show();
-			BCharacter4.show();
-			BCharacter5.show();
-			BFight.show();
-			BBack.show();
-			
-			if(BCharacter1.clicked()) {
-				if(player1.charID == null) 				{ player1.setCharacter("Entoni"); 	BCharacter1.toggle(true); }
-				else if(player2.charID == null) 		{ player2.setCharacter("Entoni"); 	BCharacter1.toggle(true); }
-				else if(player1.charID == "Entoni") 	{ player1.setCharacter(""); 		BCharacter1.toggle(false); }
-				else if(player2.charID == "Entoni") 	{ player2.setCharacter(""); 		BCharacter1.toggle(false); }
-			}
-			if(BCharacter2.clicked()) {
-				if(player1.charID == null) 				{ player1.setCharacter("Entoni2"); 	BCharacter1.toggle(true); }
-				else if(player2.charID == null) 		{ player2.setCharacter("Entoni2"); 	BCharacter1.toggle(true); }
-				else if(player1.charID == "Entoni2") 	{ player1.setCharacter(""); 		BCharacter1.toggle(false); }
-				else if(player2.charID == "Entoni2") 	{ player2.setCharacter(""); 		BCharacter1.toggle(false); }
-			}
-//			if(BCharacter3.clicked()) {
-//				BCharacter3.toggle();
-//			}
-//			if(BCharacter4.clicked()) {
-//				BCharacter4.toggle();
-//			}
-//			if(BCharacter5.clicked()) {
-//				BCharacter5.toggle();
-//			}
-			
-			if(BBack.clicked()) {
-				level = "main_menu";
-			}
-			
-		}
-		
 		if(UIID == "UI.level_selection") {
 			
 			applet.textSize(50);
@@ -465,7 +378,7 @@ public class Level {
 				level = "fight";
 
 				player1.setCharacter("Entoni");;
-				player2.setCharacter("Entoni");;
+				player2.setCharacter("Fabian");;
 					
 				
 			}

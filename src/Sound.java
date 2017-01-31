@@ -16,13 +16,14 @@ public class Sound {
 		
 		for(int i = 0; i < music.length; i++) {
 			
-			music[i].setVolume((float) (Game.main_volume * Game.music_volume));
+			music[i].setGain((float) (Game.main_volume * Game.music_volume));
+			System.out.println((float) (Game.main_volume * Game.music_volume));
 			
 		}
 		
 		for(int i = 0; i < sounds.length; i++) {
 			
-			sounds[i].setVolume((float) (Game.main_volume * Game.soundfx_volume));
+			sounds[i].setGain((float) (Game.main_volume * Game.soundfx_volume));
 			
 		}
 	}

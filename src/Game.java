@@ -6,13 +6,13 @@ import java.io.IOException;
 public class Game extends PApplet{
 	
 	public static void main(String[] args) {
-		Configurator.main(platformNames);
-//		try {
-//			startGame();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+//		Configurator.main(platformNames);
+		try {
+			startGame();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}	
 	
 	static boolean fullscreen = false;
@@ -48,8 +48,8 @@ public class Game extends PApplet{
 	static boolean loaded = false;
 	PFont font;
 	
-	static PImage[] entoni = new PImage[14];
-	static PImage[] entoni2 = new PImage[14];
+	static PImage[] entoni = new PImage[11];
+	static PImage[] fabian = new PImage[11];
 	
 	static PImage[] background = new PImage[3];
 	
@@ -81,13 +81,15 @@ public class Game extends PApplet{
 			}
 		}
 		
-		PJOGL.setIcon("data/icon.png");
+		PJOGL.setIcon("data/logos/icon.png");
 		
 	}
 	
 	public void setup() {
 		
 		background(255, 0, 0);
+		textAlign(CENTER);
+		textSize(100);
 		text("Loading", width / 2, height / 2);
 		
 		surface.setTitle("Super MUKI Fighters");
@@ -197,9 +199,9 @@ public class Game extends PApplet{
 			entoni[i] = loadImage("data/characters/Entoni/" + i + ".png");
 			entoni[i].resize(gameHeight / 4, gameHeight / 4);
 		}
-		for(int i = 0; i < entoni2.length; i++) {
-			entoni2[i] = loadImage("data/characters/Entoni2/" + i + ".png");
-			entoni2[i].resize(gameHeight / 4, gameHeight / 4);
+		for(int i = 0; i < fabian.length; i++) {
+			fabian[i] = loadImage("data/characters/Fabian/" + i + ".png");
+			fabian[i].resize(gameHeight / 4, gameHeight / 4);
 			delay(100);
 		}
 		
@@ -217,13 +219,13 @@ public class Game extends PApplet{
 		
 		//Logos
 		
-		logos[0] = loadImage("data/logo.png");
+		logos[0] = loadImage("data/logos/logo.png");
 		logos[0].resize((logos[0].width / logos[0].height) * (gameHeight / 4), gameHeight / 4);
 		
-		logos[1] = loadImage("data/hsrw_logo.png");
+		logos[1] = loadImage("data/logos/hsrw_logo.png");
 		logos[1].resize((logos[1].width / logos[1].height) * (gameHeight / 3), gameHeight / 3);
 		
-		logos[2] = loadImage("data/processing_logo.png");
+		logos[2] = loadImage("data/logos/processing_logo.png");
 		logos[2].resize(gameHeight / 3, gameHeight / 3);
 		
 	}

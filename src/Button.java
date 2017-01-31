@@ -11,7 +11,6 @@ public class Button {
 	int ButtonType;
 	boolean toggled = false;
 	
-	int menuPosition;
 	PImage image;
 	static boolean clickedImpulse = true;
 	
@@ -27,7 +26,6 @@ public class Button {
 		ypos = y;
 		width = w;
 		height = h;
-		menuPosition = pos;
 		
 		fillColor[0] = r;
 		fillColor[1] = g;
@@ -50,7 +48,6 @@ public class Button {
 		ypos = y;
 		width = w;
 		height = h;
-		menuPosition = pos;
 		
 		fillColor[0] = r;
 		fillColor[1] = g;
@@ -74,7 +71,6 @@ public class Button {
 		ypos = y;
 		width = w;
 		height = h;
-		menuPosition = pos;
 		
 		image = img;
 		
@@ -104,7 +100,7 @@ public class Button {
 			}
 			
 			if(hover()) {
-				applet.rect(xpos + applet.random(-5, 5), ypos + applet.random(-5, 5), width, height);
+				applet.rect(xpos + applet.random(-5, 5), ypos + applet.random(-5, 5), width / applet.height, height / applet.height);
 			}
 			else {
 				applet.rect(xpos, ypos, width, height);
@@ -150,7 +146,7 @@ public class Button {
 				applet.fill(255, 0, 0, 150);
 				float tempXpos = xpos + applet.random(-5, 5);
 				float tempYpos = ypos + applet.random(-5, 5);
-				applet.image(image, tempXpos, tempYpos, width, height);
+				applet.image(image, tempXpos, tempYpos, width / applet.height, height / applet.height);
 				applet.rect(tempXpos, tempYpos, width, height);
 			}
 			

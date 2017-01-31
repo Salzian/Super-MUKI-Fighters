@@ -3,7 +3,7 @@ import processing.core.*;
 public class Character {
 
 	PApplet applet;
-	PImage[] poses = new PImage[14];
+	PImage[] poses = new PImage[11];
 
 	float xpos, ypos;
 	float velocityX = 0, velocityY = 0;
@@ -60,13 +60,15 @@ public class Character {
 		this.charID = id;
 
 		switch (charID) {
-		case "Harambe":
-			poses = Game.entoni2; break;
 			
 		case "Entoni":
 			poses = Game.entoni; break;
+		
+		case "Fabian":
+			poses = Game.fabian; break;
+	
 		}
-
+			
 		charSet = true;
 
 	}

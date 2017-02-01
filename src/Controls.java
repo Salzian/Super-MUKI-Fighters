@@ -18,7 +18,15 @@ public class Controls {
 					W,
 					A,
 					S,
-					D;
+					D,
+					
+					R,
+					T,
+					Z,
+					
+					I,
+					O,
+					P;
 	
 	static boolean
 					mLeft,
@@ -29,6 +37,8 @@ public class Controls {
 					c1B,
 					c1X,
 					c1Y,
+					
+					c1RShoulder,
 					
 					c1Start,
 					c1Select,
@@ -50,6 +60,8 @@ public class Controls {
 					c2B,
 					c2X,
 					c2Y,
+					
+					c2RShoulder,
 	
 					c2Start,
 					c2Select,
@@ -82,6 +94,8 @@ public class Controls {
 				public void buttonB(boolean pressed) { c1B = pressed; }
 				public void buttonX(boolean pressed) { c1X = pressed; }
 				public void buttonY(boolean pressed) { c1Y = pressed; }
+				
+				public void rightShoulder(boolean pressed) { c1RShoulder = pressed; }
 
 				public void start(boolean pressed) { c1Start = pressed; }
 				public void back(boolean pressed) { c1Select = pressed; }
@@ -116,6 +130,8 @@ public class Controls {
 					public void buttonB(boolean pressed) { c2B = pressed; }
 					public void buttonX(boolean pressed) { c2X = pressed; }
 					public void buttonY(boolean pressed) { c2Y = pressed; }
+					
+					public void rightShoulder(boolean pressed) { c2RShoulder = pressed; }
 
 					public void start(boolean pressed) { c2Start = pressed; }
 					public void back(boolean pressed) { c2Select = pressed; }
@@ -197,6 +213,37 @@ public class Controls {
 		case 68:
 			
 			return D = b;
+			
+			
+		case 82:
+			
+			return R = b;
+			
+		case 84:
+			
+			return T = b;
+			
+		case 89:
+	
+			return Z = b;
+			
+		case 90:
+			
+			return Z = b;
+			
+			
+		case 73:
+			
+			return I = b;
+			
+		case 79:
+			
+			return O = b;
+			
+		case 80:
+			
+			return P = b;
+			
 			
 		default:
 			

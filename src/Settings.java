@@ -56,16 +56,7 @@ public class Settings {
 				+ Configurator.width
 				+ "\n"
 				+ "gameHeight="
-				+ Configurator.height
-				+ "\n\n"
-				+ "main_volume="
-				+ Configurator.main_volume
-				+ "\n"
-				+ "music_volume="
-				+ Configurator.music_volume
-				+ "\n"
-				+ "soundfx_volume="
-				+ Configurator.soundfx_volume;
+				+ Configurator.height;
 		
 		settingsWriter.write(newSettings);
 		settingsWriter.close();	
@@ -80,10 +71,7 @@ public class Settings {
 				"fullscreen=false\n"
 				+ "opengl=true\n"
 				+ "gameWidth=800\n"
-				+ "gameHeight=600\n\n"
-				+ "main_volume=1.0\n"
-				+ "music_volume=1.0\n"
-				+ "soundfx_volume=1.0";
+				+ "gameHeight=600\n";
 		
 		settingsWriter.write(defaultSettings);
 		settingsWriter.close();		

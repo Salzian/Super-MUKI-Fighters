@@ -5,7 +5,7 @@ public class Sound {
 	
 	static PApplet applet;
 	static Minim minim;
-	static AudioPlayer[] music = new AudioPlayer[2];
+	static AudioPlayer[] music = new AudioPlayer[5];
 	static AudioPlayer[] sounds = new AudioPlayer[1];
 	
 	static void setupSoundEngine(PApplet p) {
@@ -14,16 +14,15 @@ public class Sound {
 		
 		loadSamples();
 		
-		for(int i = 0; i < music.length; i++) {
-			
-			music[i].setGain((float) (Game.main_volume * Game.music_volume));
-			System.out.println((float) (Game.main_volume * Game.music_volume));
-			
-		}
+		music[0].setGain(-6f);
+		music[1].setGain(-12f);
+		music[2].setGain(-12f);
+		music[3].setGain(-12f);
+		music[4].setGain(-6f);
 		
 		for(int i = 0; i < sounds.length; i++) {
 			
-			sounds[i].setGain((float) (Game.main_volume * Game.soundfx_volume));
+			sounds[i].setGain(1f);
 			
 		}
 	}
@@ -37,24 +36,27 @@ public class Sound {
 		switch(command) {
 		
 		case "play":
-			if(!audioPlayer.isLooping()) { audioPlayer.loop(); }
+			if(!audioPlayer.isPlaying()) { audioPlayer.loop(); }
 			break;
 		
 		case "stop":
-			if(audioPlayer.isLooping()) { audioPlayer.pause(); audioPlayer.rewind(); }
+			if(audioPlayer.isPlaying()) { audioPlayer.pause(); audioPlayer.rewind(); }
 			break;
 			
 		}
 	
 	}
 	
-	static void playSound(AudioPlayer sound) { sound.play(); }
+	static void playSound(AudioPlayer sound) { if(!sound.isPlaying()) { sound.pause(); sound.rewind(); sound.play(); }; }
 	static void stopSound(AudioPlayer sound) { sound.pause(); sound.rewind(); }
 	
 	static void loadSamples() {
 		
-		music[0] = minim.loadFile("data/audio/music/music.main_menu.mp3", 4096);
-		music[1] = minim.loadFile("data/audio/music/earrape-mode.mp3", 4096);
+		music[0] = minim.loadFile("data/audio/music/main_menu.mp3", 4096);
+		music[1] = minim.loadFile("data/audio/music/woods.mp3", 4096);
+		music[2] = minim.loadFile("data/audio/music/night.mp3", 4096);
+		music[3] = minim.loadFile("data/audio/music/island.mp3", 4096);
+		music[4] = minim.loadFile("data/audio/music/credits.mp3", 4096);
 		
 		sounds[0] = minim.loadFile("data/audio/boot.mp3", 4096);
 		

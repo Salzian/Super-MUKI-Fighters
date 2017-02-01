@@ -2,7 +2,7 @@ import processing.core.*;
 
 public class Level {
 	
-	static String level = "startup";
+	static String level = "level_selection";
 	
 	static Character player1;
 	static Character player2;
@@ -51,6 +51,8 @@ public class Level {
 
 	static float prefightTime = 0;
 	static float tempXpos1, tempXpos2, VSTextPos;
+	
+	static float deadTime = 0;
 
 	static int choosenLevel;
 	
@@ -60,6 +62,8 @@ public class Level {
 				vibStrenght2;
 	static int	vibDuration1,
 				vibDuration2;
+
+	public static float WinTextPos;
 
 	
 	static void setupLevels(PApplet p) {
@@ -166,14 +170,23 @@ public class Level {
 		}
 		
 		if(level == "credits") {
+			applet.cursor();
 			applet.background(0);
 			drawUI("credits");
-			if(skip()) { level = "main_menu"; }
+			Sound.controlMusic(Sound.music[0], "stop");
+			Sound.controlMusic(Sound.music[4], "play");
+			
+			if(skip()) {
+				level = "main_menu";
+			}
 		}
 		
 		if(level == "main_menu") {
+			applet.cursor();
 			applet.background(0);
 			drawUI("UI.main_menu");
+			Sound.controlMusic(Sound.music[4], "stop");
+			Sound.controlMusic(Sound.music[0], "play");
 		}
 		
 		if(level == "level_selection") {
@@ -201,11 +214,43 @@ public class Level {
 			if(Clock.curTime - prefightTime < 7500) {
 				drawUI("UI.pre_fight");
 			} else {
-				controlCharacters();
+				
 				player1.drawCharacter();
 				player2.drawCharacter();
-				drawUI("UI.fight");
+				
+				if(player1.health <= 0 || player2.health <= 0) {
+					
+					if(deadTime == 0) {
+						deadTime = Clock.curTime;
+						Sound.controlMusic(Sound.music[Level.choosenLevel + 1], "stop");
+					}
+					
+					if((player1.dead || player2.dead) && (Clock.curTime - player1.deadTime > 1000 || Clock.curTime - player2.deadTime > 1000)) {
+						
+						prefightTime = Clock.curTime;
+						level = "end";
+						
+					}
+					
+				}
+				else {
+					
+					controlCharacters();	
+					drawUI("UI.fight");
+						
+				}
+					
 			}
+			
+		}
+		
+		if(level == "end") {
+			
+			applet.image(
+					Game.background[choosenLevel],
+					applet.width / 2,
+					applet.height / 2);
+			drawUI("UI.post_fight");
 			
 		}
 		
@@ -313,6 +358,8 @@ public class Level {
 				}
 				else {
 					creditsTimer = -1;
+					Sound.controlMusic(Sound.music[4], "stop");
+					Sound.controlMusic(Sound.music[0], "play");
 					level = "main_menu";
 				}
 			
@@ -375,10 +422,12 @@ public class Level {
 				healthbar1 = 1;
 				healthbar2 = 1;
 				choosenLevel = 0;
+				Sound.controlMusic(Sound.music[0], "stop");
+				Sound.controlMusic(Sound.music[1], "play");
 				level = "fight";
 
-				player1.setCharacter("Entoni");;
-				player2.setCharacter("Fabian");;
+				player1.setCharacter("Entoni");
+				player2.setCharacter("Fabian");
 					
 				
 			}
@@ -387,10 +436,12 @@ public class Level {
 				healthbar1 = 1;
 				healthbar2 = 1;
 				choosenLevel = 1;
+				Sound.controlMusic(Sound.music[0], "stop");
+				Sound.controlMusic(Sound.music[2], "play");
 				level = "fight";
 				
 				player1.setCharacter("Entoni");
-				player2.setCharacter("Entoni");
+				player2.setCharacter("Fabian");
 			
 			}
 			if(BStage3.clicked()) {
@@ -398,10 +449,12 @@ public class Level {
 				healthbar1 = 1;
 				healthbar2 = 1;
 				choosenLevel = 2;
+				Sound.controlMusic(Sound.music[0], "stop");
+				Sound.controlMusic(Sound.music[3], "play");
 				level = "fight";
 				
 				player1.setCharacter("Entoni");
-				player2.setCharacter("Entoni");
+				player2.setCharacter("Fabian");
 			
 			}
 			
@@ -459,6 +512,34 @@ public class Level {
 		
 		if(UIID == "UI.fight") {
 			healthBars();
+		}
+		
+		if(UIID == "UI.post_fight") {
+			
+			if(Clock.curTime - prefightTime < 1000 && Clock.curTime - prefightTime < 4000) {
+				tempXpos1 = tempXpos1 + (applet.width / 2 - tempXpos1) * 2f * Clock.elapTime;
+				WinTextPos = WinTextPos + (applet.height / 2 - WinTextPos) * 2f * Clock.elapTime;
+			} else if(Clock.curTime - prefightTime < 5000) {
+				tempXpos1 = tempXpos1 + (-applet.width - tempXpos1) * 2f * Clock.elapTime;
+				WinTextPos = WinTextPos + (-applet.height - WinTextPos) * 2f * Clock.elapTime;
+			} else if(Clock.curTime - prefightTime < 6000) {
+				level = "main_menu";
+			}
+			
+			applet.imageMode(PConstants.CENTER);
+			
+			if(player1.dead) {
+				applet.image(player2.poses[0], tempXpos1, applet.height / 2, player2.poses[0].width * 5, player2.poses[0].height * 5);
+			} else {
+				applet.image(player1.poses[0], tempXpos1, applet.height / 2, player1.poses[0].width * 5, player1.poses[0].height * 5);
+			}
+			
+			
+			applet.textSize(applet.height / 4);
+			applet.textAlign(PConstants.CENTER, PConstants.CENTER);
+			applet.fill(255, 0, 0);
+			applet.text("Winner", applet.width / 2, WinTextPos);
+			
 		}
 		
 	}
@@ -539,18 +620,28 @@ public class Level {
 	}
 	
 	static void controlCharacters() {
-			
-		if(Controls.W || Controls.c1A) {					player1.jump(); }
-		if(Controls.A || Controls.c1leftThumbLeft) { 		player1.moveLeft(); }
-		if(Controls.D || Controls.c1leftThumbRight) { 		player1.moveRight(); }
-		if(Controls.Alt || Controls.c1B) {					player1.punch(1); }
-		if(Controls.Space || Controls.c1X) {				player1.kick(1); }
 		
-		if(Controls.Up || Controls.c2A) {					player2.jump(); }
-		if(Controls.Left || Controls.c2leftThumbLeft) { 	player2.moveLeft(); }
-		if(Controls.Right || Controls.c2leftThumbRight) { 	player2.moveRight(); }
-		if(Controls.c2B) {									player2.punch(2); }
-		if(Controls.c2X) {									player2.kick(2); }
+		if(!player1.block) {
+		
+			if(Controls.W || Controls.c1A) {					player1.jump(); }
+			if(Controls.A || Controls.c1leftThumbLeft) { 		player1.moveLeft(); }
+			if(Controls.D || Controls.c1leftThumbRight) { 		player1.moveRight(); }
+			if(Controls.R || Controls.c1B) {					player1.punch(1); }
+			if(Controls.T || Controls.c1X) {					player1.kick(1); }
+			if(Controls.Z || Controls.c1RShoulder) {			player1.block(); }
+
+		}
+		
+		if(!player2.block) {
+			
+			if(Controls.Up || Controls.c2A) {					player2.jump(); }
+			if(Controls.Left || Controls.c2leftThumbLeft) { 	player2.moveLeft(); }
+			if(Controls.Right || Controls.c2leftThumbRight) { 	player2.moveRight(); }
+			if(Controls.P || Controls.c2B) {					player2.punch(2); }
+			if(Controls.O || Controls.c2X) {					player2.kick(2); }
+			if(Controls.I || Controls.c2RShoulder) {			player2.block(); }
+			
+		}
 		
 		if(player1.xpos < player2.xpos) {
 			player1.rotation = 1;
@@ -558,19 +649,6 @@ public class Level {
 		} else {
 			player1.rotation = -1;
 			player2.rotation = 1;
-			
-		}
-		
-	}
-	
-	static void setMenuPos(char dir) {
-		
-		switch(dir) {
-		
-		case '+': menuPosition++; break;
-		case '-': menuPosition--; break;
-		default: return;
-		
 		}
 		
 	}
@@ -600,12 +678,10 @@ public class Level {
 			case 2:
 				
 				if(action == "punch") {
-					player1.hit(applet.random(2, 5));
 					float damage = applet.random(2, 5);
 					player1.hit(damage);
 				}
 				if(action == "kick") {
-					player1.hit(applet.random(5, 10));
 					float damage = applet.random(2, 5);
 					player1.hit(damage);
 				}

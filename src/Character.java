@@ -12,7 +12,7 @@ public class Character {
 	boolean charSet;
 	
 	float old_velocityX;
-	int punchPose = 10;
+	int punchPose = 4;
 
 	static float ground;
 	boolean grounded = true;
@@ -22,19 +22,24 @@ public class Character {
 	float hitTime;
 	
 	float punchTime;
-	int lastPunchPose = 10;
+	int lastPunchPose = 5;
 	
 	boolean kicked;
 	float kickTime;
 	
-	boolean shot;
-	boolean shotTime;
+	float blockTime;
+	boolean block;
+	
+	int bounceCount;
+	boolean healthDead;
+	float deadTime;
+	boolean dead;
 	
 
 	Character(int n, PApplet p) {
 
 		this.applet = p;
-		ground = applet.height / 8 * 7;
+		ground = applet.height / 8 * 6;
 		
 		switch(n) {
 		case 1:
@@ -57,7 +62,19 @@ public class Character {
 
 	void setCharacter(String id) {
 
-		this.charID = id;
+		charID = id;
+		
+		velocityX = 0;
+		velocityY = 0;
+		pose = 0;
+
+		grounded = true;
+
+		health = 100;
+		dead = false;
+		bounceCount = 0;
+		
+		deadTime = 0;
 
 		switch (charID) {
 			
@@ -77,11 +94,23 @@ public class Character {
 
 	int setPose(int p) {
 		
-		if(Clock.curTime - punchTime <= 200) {
+		if(healthDead) {
+			return pose = 10;
+		}
+		
+		if(Clock.curTime - punchTime <= 300) {
 			return pose;
 		}
 		
-		if(Clock.curTime - kickTime <= 500) {
+		if(Clock.curTime - kickTime <= 300) {
+			return pose;
+		}
+		
+		if(Clock.curTime - blockTime <= 1000) {
+			return pose;
+		}
+		
+		if(Clock.curTime - hitTime <= 500) {
 			return pose;
 		}
 		
@@ -139,14 +168,37 @@ public class Character {
 	void rules() {
 		
 		//Ground Boundaries
-		if (ypos >= ground) {
-
-			velocityY = 0;
-			ypos = ground;
+		if(!healthDead) {
 			
-			setPose(4);
-			grounded = true;
-
+			if (ypos >= ground) {
+	
+				velocityY = 0;
+				ypos = ground;
+				
+				grounded = true;
+	
+			}
+			
+		}
+		
+		else {
+			
+			setPose(10);
+			
+			if (ypos >= ground) {
+				
+				ypos = ground + 1;
+				velocityY = -velocityY / 2;
+				bounceCount++;
+				
+				if(bounceCount > 5) {
+					velocityY = 0;
+					deadTime = Clock.curTime;
+					dead = true;
+				}
+	
+			}
+			
 		}
 		
 		//Side boundaries
@@ -160,22 +212,27 @@ public class Character {
 			
 		}
 		
-		//Reset pose when flying
-		if(!grounded) {
-			if(velocityX > -applet.height / 10 && velocityX < applet.height / 10) {
-				setPose(3);
-			}
+		//No negative health
+		if(health <= 0 && !healthDead) {
+			health = 0;
+			healthDead = true;
+			velocityY = applet.height * 2;
 		}
 		
-		//No negative health
-		if(health < 0) { health = 0; }
+		//Reset block
+		if(Clock.curTime - blockTime > 1000 && block) {
+			block = false;
+		}
+		
+		if(velocityX == 0) {
+			setPose(0);
+		}
 		
 	}
 
 	void jump() {
 		
 		if(grounded) {
-			setPose(3);
 			velocityY = (float) (applet.height * 1.3);
 			ypos--;
 			grounded = false;
@@ -217,12 +274,12 @@ public class Character {
 	
 	void punch(int player) {
 		
-		if(Clock.curTime - punchTime > 200) {
+		if(Clock.curTime - punchTime > 300) {
 			
-			if(lastPunchPose == 10) {
-				setPose(10); }
+			if(lastPunchPose == 5) {
+				setPose(4); }
 			else {
-				setPose(11);
+				setPose(5);
 			}
 			
 			lastPunchPose = pose;
@@ -243,7 +300,7 @@ public class Character {
 		
 		if(Clock.curTime - kickTime > 1000) {
 			
-			setPose(12);
+			setPose(6);
 			
 			kickTime = Clock.curTime;
 			
@@ -263,11 +320,25 @@ public class Character {
 		if(rotation > 0) { velocityX = -applet.height * (damage / 6); }
 		else { velocityX = applet.height * (damage / 6); }
 		
+		setPose(9);
+		
 		velocityY += applet.height * (damage / 8);
 		
-		health -= damage;
+		if(!block) {
+			health -= damage;
+		}
 		
 		hitTime = Clock.curTime;
+		
+	}
+	
+	void block() {
+		
+		if(Clock.curTime - blockTime > 2000) {
+			setPose(3);
+			blockTime = Clock.curTime;
+			block = true;
+		}
 		
 	}
 

@@ -18,9 +18,6 @@ public class Game extends PApplet{
 	static boolean fullscreen = false;
 	static boolean opengl = true;
 	static int gameWidth = 800, gameHeight = 600;
-	static double	main_volume = 1,
-					music_volume = 1,
-					soundfx_volume = 1;
 	
 	public static void startGame() throws InterruptedException {
 		try {
@@ -41,6 +38,15 @@ public class Game extends PApplet{
 			}
 		}
 		
+		System.out.println("fullscreen:" + fullscreen
+				+ "\nopengl "
+				+ opengl
+				+ "\ngameWidth "
+				+ gameWidth
+				+ "\ngameHeight "
+				+ gameHeight);
+		
+		System.out.println("File loaded. Starting game...");
 
 		PApplet.main("Game");
 	}
@@ -157,35 +163,9 @@ public class Game extends PApplet{
 				hash++;
 			}
 			
-			if(Settings.settings.get(i).startsWith("main_volume")) {
-				try {
-					main_volume = Double.parseDouble(Settings.settings.get(i).split("=")[1]);
-				} catch (NumberFormatException e) {
-					throw new IOException();
-				}
-				hash++;
-			}
-			
-			if(Settings.settings.get(i).startsWith("music_volume")) {
-				try {
-					music_volume = Double.parseDouble(Settings.settings.get(i).split("=")[1]);
-				} catch (NumberFormatException e) {
-					throw new IOException();
-				}
-				hash++;
-			}
-			if(Settings.settings.get(i).startsWith("soundfx_volume")) {
-				try {
-					soundfx_volume = Double.parseDouble(Settings.settings.get(i).split("=")[1]);
-				} catch (NumberFormatException e) {
-					throw new IOException();
-				}
-				hash++;
-			}
-			
 		}
 		
-		if(hash != 7) {
+		if(hash != 4) {
 			throw new IOException();
 		}
 		

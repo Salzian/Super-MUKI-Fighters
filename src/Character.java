@@ -68,7 +68,7 @@ public class Character {
 
 		grounded = true;
 
-		health = 1;
+		health = 100;
 		dead = false;
 		healthDead = false;
 		bounceCount = 0;

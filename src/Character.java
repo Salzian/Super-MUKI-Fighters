@@ -32,14 +32,12 @@ public class Character {
 	
 	int bounceCount;
 	boolean healthDead;
-	float deadTime;
 	boolean dead;
 	
 
 	Character(int n, PApplet p) {
 
 		this.applet = p;
-		ground = applet.height / 8 * 6;
 		
 		switch(n) {
 		case 1:
@@ -72,9 +70,17 @@ public class Character {
 
 		health = 100;
 		dead = false;
+		healthDead = false;
 		bounceCount = 0;
 		
-		deadTime = 0;
+		Level.deadTime = 0;
+		Level.prefightTime = 0;
+		
+		if(Level.choosenLevel != 2) {
+			ground = applet.height / 8 * 6;
+		} else {
+			ground = applet.height / 32 * 27;
+		}
 
 		switch (charID) {
 			
@@ -98,19 +104,19 @@ public class Character {
 			return pose = 10;
 		}
 		
-		if(Clock.curTime - punchTime <= 300) {
-			return pose;
-		}
-		
-		if(Clock.curTime - kickTime <= 300) {
-			return pose;
-		}
-		
 		if(Clock.curTime - blockTime <= 1000) {
 			return pose;
 		}
 		
 		if(Clock.curTime - hitTime <= 500) {
+			return pose;
+		}
+		
+		if(Clock.curTime - punchTime <= 300) {
+			return pose;
+		}
+		
+		if(Clock.curTime - kickTime <= 300) {
 			return pose;
 		}
 		
@@ -183,6 +189,8 @@ public class Character {
 		
 		else {
 			
+			//Death
+			
 			setPose(10);
 			
 			if (ypos >= ground) {
@@ -193,7 +201,9 @@ public class Character {
 				
 				if(bounceCount > 5) {
 					velocityY = 0;
-					deadTime = Clock.curTime;
+					if(Level.deadTime == 0) {
+						Level.deadTime = Clock.curTime;
+					}
 					dead = true;
 				}
 	
@@ -216,7 +226,7 @@ public class Character {
 		if(health <= 0 && !healthDead) {
 			health = 0;
 			healthDead = true;
-			velocityY = applet.height * 2;
+			velocityY = applet.height;
 		}
 		
 		//Reset block
@@ -334,7 +344,7 @@ public class Character {
 	
 	void block() {
 		
-		if(Clock.curTime - blockTime > 2000) {
+		if(Clock.curTime - blockTime > 2000 && Clock.curTime - hitTime > 250) {
 			setPose(3);
 			blockTime = Clock.curTime;
 			block = true;

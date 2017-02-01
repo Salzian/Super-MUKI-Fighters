@@ -83,20 +83,23 @@ public class Configurator extends JFrame {
 			loadSettings();
 		}
 		catch (IOException e) {
-			System.out.println("File Error. Trying to create new file...");
+			System.out.println("[Configurator] File not found or cannot be read. Trying to create new file...");
 			try {
 				Settings.CreateFile();
 			}
 			catch (IOException f) {
-				System.out.println("File cannot be created. Check write access permissions! Loading game with default settings...");
+				System.out.println("[Configurator] File cannot be created. Check write access permissions! Loading game with default settings...");
 			}
+			System.out.println("[Configurator] New file has been created. Reading new file...");
 			try {
 				loadSettings();
 			} catch(IOException g) {
-				System.out.println("New file cannot be read. Check read access permissions! Loading game with default settings...");
+				System.out.println("[Configurator] New file cannot be read. Check read access permissions! Loading game with default settings...");
 			}
 			
 		}
+		
+		System.out.println("[Configurator] File loaded.");
 		
 		chckbxFullscreen.setSelected(fullscreen);
 		lblWidth.setEnabled(!fullscreen);

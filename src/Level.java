@@ -2,7 +2,7 @@ import processing.core.*;
 
 public class Level {
 	
-	static String level = "level_selection";
+	static String level = "startup";
 	
 	static Character player1;
 	static Character player2;
@@ -77,7 +77,6 @@ public class Level {
 				applet.width / 2,
 				applet.height / 2 + applet.height / 8,
 				applet.height / 3, applet.height / 10,
-				1,
 				0, 0, 255,
 				"Start");
 
@@ -86,7 +85,6 @@ public class Level {
 				applet.width / 2,
 				applet.height / 2 + applet.height / 4,
 				applet.height / 3, applet.height / 10,
-				2,
 				0, 0, 255,
 				"Ende");
 
@@ -95,7 +93,6 @@ public class Level {
 				applet.width / 8 * 7,
 				applet.height - applet.height / 16,
 				applet.height / 5, applet.height / 10,
-				3,
 				0, 255, 255,
 				"Credits");
 
@@ -104,7 +101,6 @@ public class Level {
 				applet.width / 8 * 7,
 				applet.height - applet.height / 16,
 				applet.height / 5, applet.height / 10,
-				3,
 				0, 255, 255,
 				"Fight");
 
@@ -112,8 +108,7 @@ public class Level {
 				applet,
 				applet.width / 8,
 				applet.height - applet.height / 16,
-				150, 50,
-				6,
+				applet.height / 5, applet.height / 10,
 				255, 0, 0,
 				"Zurueck");
 		
@@ -122,27 +117,25 @@ public class Level {
 				applet,
 				applet.width / 2 - applet.height / 4,
 				applet.height / 2,
-				applet.height / 2 + applet.height / 8,
-				applet.height / 3, applet.height / 10,
+				applet.height / 2, applet.height / 4,
 				Game.background[0]);
 		BStage2 = new Button(
 				applet,
 				applet.width / 2 + applet.height / 4,
 				applet.height / 2,
-				applet.height / 2 + applet.height / 8,
-				applet.height / 3, applet.height / 10,
+				applet.height / 2, applet.height / 4,
 				Game.background[1]);
 		BStage3 = new Button(
 				applet,
 				applet.width / 2,
 				applet.height / 4 * 3,
-				applet.height / 2 + applet.height / 8,
-				applet.height / 3, applet.height / 10,
+				applet.height / 2, applet.height / 4,
 				Game.background[2]);
 		
 		tempXpos1 = - applet.width;
 		tempXpos2 = applet.width * 2;
 		VSTextPos = - applet.height;
+		WinTextPos = - applet.height;
 	}
 	
 	static void setLevel(String new_level) {
@@ -212,6 +205,10 @@ public class Level {
 			}
 			
 			if(Clock.curTime - prefightTime < 7500) {
+				player1.xpos = applet.width / 2 - applet.height / 2;
+				player1.ypos = Character.ground;
+				player2.xpos = applet.width / 2 + applet.height / 2;
+				player2.ypos = Character.ground;
 				drawUI("UI.pre_fight");
 			} else {
 				
@@ -225,9 +222,12 @@ public class Level {
 						Sound.controlMusic(Sound.music[Level.choosenLevel + 1], "stop");
 					}
 					
-					if((player1.dead || player2.dead) && (Clock.curTime - player1.deadTime > 1000 || Clock.curTime - player2.deadTime > 1000)) {
+					if((player1.dead || player2.dead) && Clock.curTime - deadTime > 1000) {
 						
 						prefightTime = Clock.curTime;
+						WinTextPos = -applet.height;
+						tempXpos1 = -applet.height;
+						
 						level = "end";
 						
 					}
@@ -246,6 +246,7 @@ public class Level {
 		
 		if(level == "end") {
 			
+			autoRotate();
 			applet.image(
 					Game.background[choosenLevel],
 					applet.width / 2,
@@ -356,6 +357,16 @@ public class Level {
 				else if(creditsTimer < 39) {
 					applet.text("Minim\nby\nCompartmental", 0, 0, applet.width, applet.height);
 				}
+				else if(creditsTimer < 42) {
+					applet.text("Music used", 0, 0, applet.width, applet.height);
+				}
+				else if(creditsTimer < 45) {
+					applet.text("Exit the Premises\nClub Diver\nSpecial Spotlight\nFurious Freak\nLobby Time", 0, 0, applet.width, applet.height);
+				}
+				else if(creditsTimer < 48) {
+					applet.textSize(20);
+					applet.text("by\nTitle Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 3.0\nhttp://creativecommons.org/licenses/by/3.0/", 0, 0, applet.width, applet.height);
+				}
 				else {
 					creditsTimer = -1;
 					Sound.controlMusic(Sound.music[4], "stop");
@@ -398,7 +409,7 @@ public class Level {
 			if(BEnd.clicked()) {
 				Sound.stopSoundEngine();
 				applet.exit();
-				System.exit(1);
+				System.exit(0);
 			}
 			
 		}
@@ -424,6 +435,7 @@ public class Level {
 				choosenLevel = 0;
 				Sound.controlMusic(Sound.music[0], "stop");
 				Sound.controlMusic(Sound.music[1], "play");
+				tempXpos1 = - applet.height;
 				level = "fight";
 
 				player1.setCharacter("Entoni");
@@ -438,6 +450,7 @@ public class Level {
 				choosenLevel = 1;
 				Sound.controlMusic(Sound.music[0], "stop");
 				Sound.controlMusic(Sound.music[2], "play");
+				tempXpos1 = - applet.height;
 				level = "fight";
 				
 				player1.setCharacter("Entoni");
@@ -451,6 +464,7 @@ public class Level {
 				choosenLevel = 2;
 				Sound.controlMusic(Sound.music[0], "stop");
 				Sound.controlMusic(Sound.music[3], "play");
+				tempXpos1 = - applet.height;
 				level = "fight";
 				
 				player1.setCharacter("Entoni");
@@ -516,13 +530,13 @@ public class Level {
 		
 		if(UIID == "UI.post_fight") {
 			
-			if(Clock.curTime - prefightTime < 1000 && Clock.curTime - prefightTime < 4000) {
+			if(Clock.curTime - prefightTime > 1000 && Clock.curTime - prefightTime < 4000) {
 				tempXpos1 = tempXpos1 + (applet.width / 2 - tempXpos1) * 2f * Clock.elapTime;
 				WinTextPos = WinTextPos + (applet.height / 2 - WinTextPos) * 2f * Clock.elapTime;
-			} else if(Clock.curTime - prefightTime < 5000) {
-				tempXpos1 = tempXpos1 + (-applet.width - tempXpos1) * 2f * Clock.elapTime;
-				WinTextPos = WinTextPos + (-applet.height - WinTextPos) * 2f * Clock.elapTime;
-			} else if(Clock.curTime - prefightTime < 6000) {
+			} else if(Clock.curTime - prefightTime >= 4000 && Clock.curTime - prefightTime < 5000) {
+				tempXpos1 = tempXpos1 + (applet.width * 2 - tempXpos1) * 2f * Clock.elapTime;
+				WinTextPos = WinTextPos + (applet.height * 2 - WinTextPos) * 2f * Clock.elapTime;
+			} else if(Clock.curTime - prefightTime >= 5000 && Clock.curTime - prefightTime < 6000) {
 				level = "main_menu";
 			}
 			
@@ -642,6 +656,12 @@ public class Level {
 			if(Controls.I || Controls.c2RShoulder) {			player2.block(); }
 			
 		}
+		
+		autoRotate();
+		
+	}
+	
+	static void autoRotate() {
 		
 		if(player1.xpos < player2.xpos) {
 			player1.rotation = 1;

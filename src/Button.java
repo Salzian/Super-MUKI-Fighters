@@ -18,7 +18,6 @@ public class Button {
 			PApplet p,
 			float x, float y,
 			float w, float h,
-			int pos,
 			int r, int g, int b) {
 		
 		applet = p;
@@ -39,7 +38,6 @@ public class Button {
 			PApplet p,
 			float x, float y,
 			float w, float h,
-			int pos,
 			int r, int g, int b,
 			String t) {
 		
@@ -63,7 +61,6 @@ public class Button {
 			PApplet p,
 			float x, float y,
 			float w, float h,
-			int pos,
 			PImage img) {
 		
 		applet = p;
@@ -100,7 +97,8 @@ public class Button {
 			}
 			
 			if(hover()) {
-				applet.rect(xpos + applet.random(-5, 5), ypos + applet.random(-5, 5), width / applet.height, height / applet.height);
+				applet.noStroke();
+				applet.rect(xpos + applet.random(-5, 5), ypos + applet.random(-5, 5), width, height);
 			}
 			else {
 				applet.rect(xpos, ypos, width, height);
@@ -146,7 +144,7 @@ public class Button {
 				applet.fill(255, 0, 0, 150);
 				float tempXpos = xpos + applet.random(-5, 5);
 				float tempYpos = ypos + applet.random(-5, 5);
-				applet.image(image, tempXpos, tempYpos, width / applet.height, height / applet.height);
+				applet.image(image, tempXpos, tempYpos, width, height);
 				applet.rect(tempXpos, tempYpos, width, height);
 			}
 			

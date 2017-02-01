@@ -6,13 +6,13 @@ import java.io.IOException;
 public class Game extends PApplet{
 	
 	public static void main(String[] args) {
-//		Configurator.main(platformNames);
-		try {
-			startGame();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Configurator.main(platformNames);
+//		try {
+//			startGame();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}	
 	
 	static boolean fullscreen = false;
@@ -24,30 +24,24 @@ public class Game extends PApplet{
 			loadSettings();
 		}
 		catch (IOException e) {
-			System.out.println("File not found or cannot be read. Trying to create new file...");
+			System.out.println("[Game] File not found or cannot be read. Trying to create new file...");
 			try {
 				Settings.CreateFile();
 			}
 			catch (IOException f) {
-				System.out.println("File cannot be created. Check write access permissions! Loading game with default settings...");
+				System.out.println("[Game] File cannot be created. Check write access permissions! Loading game with default settings...");
 			}
+			System.out.println("[Game] New file has been created. Reading new file...");
 			try {
 				loadSettings();
 			} catch(IOException g) {
-				System.out.println("New file cannot be read. Check read access permissions! Loading game with default settings...");
+				System.out.println("[Game] New file cannot be read. Check read access permissions! Loading game with default settings...");
 			}
+			
 		}
 		
-		System.out.println("fullscreen:" + fullscreen
-				+ "\nopengl "
-				+ opengl
-				+ "\ngameWidth "
-				+ gameWidth
-				+ "\ngameHeight "
-				+ gameHeight);
+		System.out.println("[Game] File loaded. Starting game...");
 		
-		System.out.println("File loaded. Starting game...");
-
 		PApplet.main("Game");
 	}
 	

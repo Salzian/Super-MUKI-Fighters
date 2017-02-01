@@ -325,10 +325,10 @@ public class Level {
 					applet.text("Programming\n\nFabian Fritzsche\nDustin Koschmann\nEnrico Sansonetti", 0, 0, applet.width, applet.height);
 				}
 				else if(creditsTimer < 9) {
-					applet.text("Character Design\n\nEntoni Carigla", 0, 0, applet.width, applet.height);
+					applet.text("Character- & Concept Design\n\nEntoni Carigla", 0, 0, applet.width, applet.height);
 				}
 				else if(creditsTimer < 12) {
-					applet.text("Level- & Logodesign\n\nSemi Kefeli", 0, 0, applet.width, applet.height);
+					applet.text("Leveldesign\n\nSemi Kefeli", 0, 0, applet.width, applet.height);
 				}
 				else if(creditsTimer < 15) {
 					applet.text("Software used", 0, 0, applet.width, applet.height);
@@ -489,21 +489,25 @@ public class Level {
 				applet.textAlign(PConstants.CENTER, PConstants.CENTER);
 				applet.fill(255, 0, 0);
 				applet.text("3", applet.width / 2, applet.height / 2);
+				Sound.playSound(Sound.sounds[5]);
 			} else if(Clock.curTime - prefightTime > 5000 && Clock.curTime - prefightTime < 5500) {
 				applet.textSize(applet.height / 4);
 				applet.textAlign(PConstants.CENTER, PConstants.CENTER);
 				applet.fill(255, 0, 0);
 				applet.text("2", applet.width / 2, applet.height / 2);
+				Sound.playSound(Sound.sounds[6]);
 			} else if(Clock.curTime - prefightTime > 6000 && Clock.curTime - prefightTime < 6500) {
 				applet.textSize(applet.height / 4);
 				applet.textAlign(PConstants.CENTER, PConstants.CENTER);
 				applet.fill(255, 0, 0);
 				applet.text("1", applet.width / 2, applet.height / 2);
+				Sound.playSound(Sound.sounds[7]);
 			} else if(Clock.curTime - prefightTime > 7000 && Clock.curTime - prefightTime < 7500) {
 				applet.textSize(applet.height / 4);
 				applet.textAlign(PConstants.CENTER, PConstants.CENTER);
 				applet.fill(255, 0, 0);
-				applet.text("Start", applet.width / 2, applet.height / 2);
+				applet.text("Fight!", applet.width / 2, applet.height / 2);
+				Sound.playSound(Sound.sounds[8]);
 			}
 			
 			applet.imageMode(PConstants.CENTER);
@@ -533,6 +537,10 @@ public class Level {
 			if(Clock.curTime - prefightTime > 1000 && Clock.curTime - prefightTime < 4000) {
 				tempXpos1 = tempXpos1 + (applet.width / 2 - tempXpos1) * 2f * Clock.elapTime;
 				WinTextPos = WinTextPos + (applet.height / 2 - WinTextPos) * 2f * Clock.elapTime;
+				if(Clock.curTime - prefightTime < 2000) {
+					Sound.playSound(Sound.sounds[10]);
+					Sound.controlMusic(Sound.music[0], "play");
+				}
 			} else if(Clock.curTime - prefightTime >= 4000 && Clock.curTime - prefightTime < 5000) {
 				tempXpos1 = tempXpos1 + (applet.width * 2 - tempXpos1) * 2f * Clock.elapTime;
 				WinTextPos = WinTextPos + (applet.height * 2 - WinTextPos) * 2f * Clock.elapTime;
@@ -686,10 +694,20 @@ public class Level {
 				
 				if(action == "punch") {
 					float damage = applet.random(2, 5);
+					if(damage < 3.5) {
+						Sound.playSound(Sound.sounds[1]);
+					} else {
+						Sound.playSound(Sound.sounds[3]);
+					}
 					player2.hit(damage);
 				}
 				if(action == "kick") {
 					float damage = applet.random(5, 10);
+					if(damage < 7.5) {
+						Sound.playSound(Sound.sounds[2]);
+					} else {
+						Sound.playSound(Sound.sounds[4]);
+					}
 					player2.hit(damage);
 				}
 				result = true;
@@ -699,10 +717,20 @@ public class Level {
 				
 				if(action == "punch") {
 					float damage = applet.random(2, 5);
+					if(damage < 3.5) {
+						Sound.playSound(Sound.sounds[1]);
+					} else {
+						Sound.playSound(Sound.sounds[3]);
+					}
 					player1.hit(damage);
 				}
 				if(action == "kick") {
 					float damage = applet.random(2, 5);
+					if(damage < 7.5) {
+						Sound.playSound(Sound.sounds[2]);
+					} else {
+						Sound.playSound(Sound.sounds[4]);
+					}
 					player1.hit(damage);
 				}
 				result = true;

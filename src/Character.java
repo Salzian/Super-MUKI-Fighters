@@ -68,7 +68,7 @@ public class Character {
 
 		grounded = true;
 
-		health = 100;
+		health = 1;
 		dead = false;
 		healthDead = false;
 		bounceCount = 0;
@@ -198,6 +198,8 @@ public class Character {
 				ypos = ground + 1;
 				velocityY = -velocityY / 2;
 				bounceCount++;
+				
+				Sound.playSound(Sound.sounds[9]);
 				
 				if(bounceCount > 5) {
 					velocityY = 0;

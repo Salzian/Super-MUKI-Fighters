@@ -6,7 +6,7 @@ public class Sound {
 	static PApplet applet;
 	static Minim minim;
 	static AudioPlayer[] music = new AudioPlayer[5];
-	static AudioPlayer[] sounds = new AudioPlayer[1];
+	static AudioPlayer[] sounds = new AudioPlayer[11];
 	
 	static void setupSoundEngine(PApplet p) {
 		applet = p;
@@ -58,7 +58,19 @@ public class Sound {
 		music[3] = minim.loadFile("data/audio/music/island.mp3", 4096);
 		music[4] = minim.loadFile("data/audio/music/credits.mp3", 4096);
 		
-		sounds[0] = minim.loadFile("data/audio/boot.mp3", 4096);
+		sounds[0] = minim.loadFile("data/audio/sfx/boot.mp3", 4096);
+		
+		sounds[1] = minim.loadFile("data/audio/sfx/weakpunch.wav", 512);
+		sounds[2] = minim.loadFile("data/audio/sfx/weakkick.wav", 512);
+		sounds[3] = minim.loadFile("data/audio/sfx/mediumpunch.wav", 512);
+		sounds[4] = minim.loadFile("data/audio/sfx/mediumkick.wav", 512);
+		
+		sounds[5] = minim.loadFile("data/audio/sfx/3.wav", 512);
+		sounds[6] = minim.loadFile("data/audio/sfx/2.wav", 512);
+		sounds[7] = minim.loadFile("data/audio/sfx/1.wav", 512);
+		sounds[8] = minim.loadFile("data/audio/sfx/fight.wav", 512);
+		sounds[9] = minim.loadFile("data/audio/sfx/ko.wav", 512);
+		sounds[10] = minim.loadFile("data/audio/sfx/won.wav", 512);
 		
 	}
 	
